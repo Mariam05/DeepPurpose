@@ -478,7 +478,7 @@ class DBTA:
                 loss.backward()
                 opt.step()
                 scheduler.step()
-                print('Epoch-{0} lr: {1}'.format(epoch,
+                print('Epoch-{0} lr: {1}'.format(epo,
                                                  opt.param_groups[0]['lr']))
 
                 if verbose:
