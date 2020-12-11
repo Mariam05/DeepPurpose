@@ -366,6 +366,7 @@ class DBTA:
 				print("Let's use CPU/s!")
 		# Future TODO: support multiple optimizers with parameters
 		opt = torch.optim.Adam(self.model.parameters(), lr = lr, weight_decay = decay)
+		scheduler = opt.lr_scheduler.CyclicLR(opt,base_lr=1e-4,max_lr=1e-2,step_size_up=2000)
 		if verbose:
 			print('--- Data Preparation ---')
 
@@ -407,7 +408,7 @@ class DBTA:
 		table = PrettyTable(valid_metric_header)
 		float2str = lambda x:'%0.4f'%x
 		if verbose:
-			print('--- Go for Training ---')
+			print('--- Go for Training with CLR! ---')
 		t_start = time() 
 		for epo in range(train_epoch):
 			for i, (v_d, v_p, label) in enumerate(training_generator):
@@ -438,6 +439,7 @@ class DBTA:
 				opt.zero_grad()
 				loss.backward()
 				opt.step()
+				scheduler.step()
 
 				if verbose:
 					if (i % 100 == 0):
