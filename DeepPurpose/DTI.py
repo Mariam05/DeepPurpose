@@ -365,7 +365,7 @@ class DBTA:
 			if verbose:
 				print("Let's use CPU/s!")
 		# Future TODO: support multiple optimizers with parameters
-		opt = torch.optim.AdamW(self.model.parameters(), lr = lr, weight_decay = decay)
+		opt = torch.optim.Adam(self.model.parameters(), lr = lr, weight_decay = decay)
 		scheduler = torch.optim.lr_scheduler.CyclicLR(opt,base_lr=1e-4,max_lr=1e-2,step_size_up=2000)
 		if verbose:
 			print('--- Data Preparation ---')
@@ -440,6 +440,7 @@ class DBTA:
 				loss.backward()
 				opt.step()
 				scheduler.step()
+				print('Epoch-{0} lr: {1}'.format(epoch, opt.param_groups[0]['lr'])
 
 				if verbose:
 					if (i % 100 == 0):
