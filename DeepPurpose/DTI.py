@@ -397,10 +397,10 @@ class DBTA:
         opt = torch.optim.SGD(self.model.parameters(),
                               lr=lr, weight_decay=decay)
         scheduler = torch.optim.lr_scheduler.CyclicLR(
-            opt, base_lr=0.01, max_lr=0.1)
+            opt, base_lr=lr, max_lr=0.01)
 
         if verbose:
-            print('--- Data Preparation ---')
+            print('--- Data Preparation ! ---')
 
         params = {'batch_size': BATCH_SIZE,
                   'shuffle': True,
